@@ -8,10 +8,14 @@ namespace Tracer.Core.Models
     public class TraceResult
     {
         private Tree<MethodInfo> _tree { get; }
+        private Node<MethodInfo> _node { get; set; }
         public TraceResult()
         {
             _tree = new Tree<MethodInfo>(new MethodInfo("root", "root", 0));
+            _node = _tree.Root;
         }
+
+        public List<Node<MethodInfo>> Result { get => _tree.Root.Children; }
 
         public List<Node<MethodInfo>> GetResult()
         {
@@ -20,16 +24,16 @@ namespace Tracer.Core.Models
 
         public void Up()
         {
-            _tree.CurrentNode = _tree.CurrentNode.Parent;
+            _node = _node.Parent;
         }
 
         public void Down(MethodInfo info)
         {
             Node<MethodInfo> newNode = new Node<MethodInfo>(info);
-            newNode.Parent = _tree.CurrentNode;
+            newNode.Parent = _node;
             newNode.Data = info;
-            _tree.CurrentNode.Children.Add(newNode);
-            _tree.CurrentNode = newNode;
+            _node.Children.Add(newNode);
+            _node = newNode;
         }
     }
 }

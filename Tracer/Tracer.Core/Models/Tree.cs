@@ -10,10 +10,7 @@ namespace Tracer.Core.Models
         public Tree(T root)
         {
             Root = new Node<T>(root);
-            CurrentNode = Root;
         }
-
-        public Node<T> CurrentNode { get; set; }
-        public Node<T> Root { get; set; }
+        public Node<T> Root { get; }
     }
 }
