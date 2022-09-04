@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Tracer.Core.Models;
 
-namespace Tracer.Core.Dtos
+namespace Tracer.Core.Models
 {
-    public class TreeDto
+    public class ThreadInfo
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public int ThreadId { get; set; }
         [JsonProperty("time")]
         public long TotalTime { get; set; }
         [JsonProperty("methods")]
