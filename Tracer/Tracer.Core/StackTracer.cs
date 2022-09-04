@@ -23,18 +23,13 @@ namespace Tracer.Core
             StackTrace _stackTrace = new StackTrace();
             var sf = _stackTrace.GetFrame(LastStackFrameIndex);
             var method = sf.GetMethod();
-
             _traceResult.Down(new MethodInfo(method.Name, 
-                method.DeclaringType.Name, 100));
-
-            System.Console.WriteLine(method.Name);
-            System.Console.WriteLine(method.DeclaringType.Name);
-            System.Console.WriteLine();
+                method.DeclaringType.Name));
         }
 
         public void StopTrace()
         {
-            _traceResult.Up();
+            _traceResult.Up(100);
         }
     }
 }

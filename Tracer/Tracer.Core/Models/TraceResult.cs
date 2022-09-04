@@ -11,7 +11,7 @@ namespace Tracer.Core.Models
         private Node<MethodInfo> _node { get; set; }
         public TraceResult()
         {
-            _tree = new Tree<MethodInfo>(new MethodInfo("root", "root", 0));
+            _tree = new Tree<MethodInfo>(new MethodInfo("root", "root"));
             _node = _tree.Root;
         }
 
@@ -22,8 +22,9 @@ namespace Tracer.Core.Models
             return _tree.Root.Children;
         }
 
-        public void Up()
+        public void Up(int time)
         {
+            _node.Data.ExecutionTime = time;
             _node = _node.Parent;
         }
 

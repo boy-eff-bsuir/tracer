@@ -25,6 +25,7 @@ namespace Tracer.Example.Fakes
             _tracer.StartTrace();
             Thread.Sleep(100);
             M2();
+            M2();
             _tracer.StopTrace();
         }
         

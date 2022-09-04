@@ -8,11 +8,10 @@ namespace Tracer.Core.Models
 {
     public class MethodInfo
     {
-        public MethodInfo(string name, string className, int executionTime)
+        public MethodInfo(string name, string className)
         {
             Name = name;
             ClassName = className;
-            ExecutionTime = executionTime;
         }
 
         [JsonProperty("name")]
