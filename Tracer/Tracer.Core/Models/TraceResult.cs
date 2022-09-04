@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,34 +8,47 @@ namespace Tracer.Core.Models
 {
     public class TraceResult
     {
-        private Tree<MethodInfo> _tree { get; }
-        private Node<MethodInfo> _node { get; set; }
-        public TraceResult()
+        private MethodInfo _rootMethodInfo = new MethodInfo("root", "root");
+        private IReadOnlyDictionary<int, Tree<MethodInfo>> _methods
+            = new ConcurrentDictionary<int, Tree<MethodInfo>>();
+        private ConcurrentDictionary<int, Tree<MethodInfo>> _methodsByThreadId ;
+
+        public IReadOnlyList<Tree<MethodInfo>> GetResult()
         {
-            _tree = new Tree<MethodInfo>(new MethodInfo("root", "root"));
-            _node = _tree.Root;
+            return _methodsByThreadId.Values.ToList().AsReadOnly();
         }
 
-        public List<Node<MethodInfo>> Result { get => _tree.Root.Children; }
-
-        public List<Node<MethodInfo>> GetResult()
+        public void Up(long time)
         {
-            return _tree.Root.Children;
-        }
-
-        public void Up(int time)
-        {
-            _node.Data.ExecutionTime = time;
-            _node = _node.Parent;
+            var tree = GetCurrentThreadTree();
+            tree.CurrentNode.Data.ExecutionTime = time;
+            tree.CurrentNode = tree.CurrentNode.Parent;
         }
 
         public void Down(MethodInfo info)
         {
+            var tree = GetCurrentThreadTree();
             Node<MethodInfo> newNode = new Node<MethodInfo>(info);
-            newNode.Parent = _node;
+            newNode.Parent = tree.CurrentNode;
             newNode.Data = info;
-            _node.Children.Add(newNode);
-            _node = newNode;
+            tree.CurrentNode.Children.Add(newNode);
+            tree.CurrentNode = newNode;
+        }
+
+        public MethodInfo GetCurrentMethod()
+        {
+            var tree = GetCurrentThreadTree();
+            return tree.CurrentNode.Data;
+        }
+
+        private Tree<MethodInfo> GetCurrentThreadTree()
+        {
+            var threadId = Thread.CurrentThread.ManagedThreadId;
+            if (!_methodsByThreadId.ContainsKey(threadId))
+            {
+                _methodsByThreadId.TryAdd(threadId, new Tree<MethodInfo>(threadId, _rootMethodInfo));
+            }
+            return _methodsByThreadId[threadId];
         }
     }
 }

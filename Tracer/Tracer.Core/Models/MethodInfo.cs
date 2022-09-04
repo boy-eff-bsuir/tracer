@@ -10,15 +10,18 @@ namespace Tracer.Core.Models
     {
         public MethodInfo(string name, string className)
         {
+            Id = Guid.NewGuid();
             Name = name;
             ClassName = className;
         }
 
+        [JsonProperty("id")]
+        public Guid Id { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("className")]
         public string ClassName { get; set; }
         [JsonProperty("executionTime")]
-        public int ExecutionTime { get; set; }
+        public long ExecutionTime { get; set; }
     }
 }
