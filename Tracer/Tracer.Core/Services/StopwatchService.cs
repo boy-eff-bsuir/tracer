@@ -18,8 +18,9 @@ namespace Tracer.Core.Services
 
        public static long Stop(Guid id)
        {
-            _stopwatches[id].Stop();
-            return _stopwatches[id].ElapsedMilliseconds;
+            var stopwatch = _stopwatches[id];
+            stopwatch.Stop();
+            return stopwatch.ElapsedMilliseconds;
        }
     }
 }

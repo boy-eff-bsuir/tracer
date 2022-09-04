@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tracer.Core.Interfaces;
 using Tracer.Core.Models;
+using Tracer.Core.Services;
 
 namespace Tracer.Core
 {
@@ -23,13 +24,18 @@ namespace Tracer.Core
             StackTrace _stackTrace = new StackTrace();
             var sf = _stackTrace.GetFrame(LastStackFrameIndex);
             var method = sf.GetMethod();
-            _traceResult.Down(new MethodInfo(method.Name, 
-                method.DeclaringType.Name));
+            var methodInfo = new MethodInfo(method.Name, 
+                method.DeclaringType.Name);
+            _traceResult.Down(methodInfo);
+
+            StopwatchService.Start(methodInfo.Id);
         }
 
         public void StopTrace()
         {
-            _traceResult.Up(100);
+            var method = _traceResult.GetCurrentMethod();
+            var time = StopwatchService.Stop(method.Id);
+            _traceResult.Up(time);
         }
     }
 }
