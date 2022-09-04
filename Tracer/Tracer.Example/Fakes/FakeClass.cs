@@ -18,13 +18,13 @@ namespace Tracer.Example.Fakes
         public void M0()
         {
             M1();
-            M2();
         }
         
         private void M1()
         {
             _tracer.StartTrace();
             Thread.Sleep(100);
+            M2();
             _tracer.StopTrace();
         }
         

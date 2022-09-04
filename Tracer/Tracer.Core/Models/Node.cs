@@ -7,13 +7,13 @@ namespace Tracer.Core.Models
 {
     public class Node<T> where T : class
     {
-        public Node()
+        public Node(T data)
         {
-            Children = new List<Node<T>>();
+            Data = data;
         }
 
         public Node<T> Parent { get; set; }
-        public T Object { get; set; }
+        public T Data { get; set; }
         public List<Node<T>> Children { get; set; } = new List<Node<T>>();
     }
 }

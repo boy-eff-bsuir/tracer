@@ -10,8 +10,9 @@ namespace Tracer.Core
 {
     public class StackTracer : ITracer
     {
+        private const int LastStackFrameIndex = 1;
         private TraceResult _traceResult = new TraceResult();
-        private Stack<MethodInfo> _currentStack { get; set; } = new Stack<MethodInfo>();
+
         public TraceResult GetTraceResult()
         {
             return _traceResult;
@@ -20,11 +21,11 @@ namespace Tracer.Core
         public void StartTrace()
         {
             StackTrace _stackTrace = new StackTrace();
-            var sf = _stackTrace.GetFrame(_stackTrace.FrameCount - 3);
+            var sf = _stackTrace.GetFrame(LastStackFrameIndex);
             var method = sf.GetMethod();
-            _currentStack.Push(new MethodInfo(method.Name, 
-                method.DeclaringType.Name, 100)
-            );
+
+            _traceResult.Down(new MethodInfo(method.Name, 
+                method.DeclaringType.Name, 100));
 
             System.Console.WriteLine(method.Name);
             System.Console.WriteLine(method.DeclaringType.Name);
@@ -33,8 +34,7 @@ namespace Tracer.Core
 
         public void StopTrace()
         {
-            var methodInfo = _currentStack.Pop();
-            _traceResult.Tree.CreateChild(methodInfo);
+            _traceResult.Up();
         }
     }
 }
