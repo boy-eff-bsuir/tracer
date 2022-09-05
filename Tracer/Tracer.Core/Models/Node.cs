@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using YamlDotNet.Serialization;
 
 namespace Tracer.Core.Models
 {
@@ -21,6 +22,7 @@ namespace Tracer.Core.Models
 
         [JsonIgnore]
         [XmlIgnore]
+        [YamlIgnore]
         public Node<T> Parent { get; set; }
         [JsonProperty("data")]
         public T Data { get; set; }

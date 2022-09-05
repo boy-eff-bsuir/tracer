@@ -20,20 +20,23 @@ var result = tracer.GetTraceResult();
 
 var assemblyJson = Assembly.LoadFrom(@"C:\Users\Asus\Desktop\5 семестр\СПП\1 лаба\Serialization\Json\bin\Debug\net6.0\JsonSerializer.dll");
 var assemblyXml = Assembly.LoadFrom(@"C:\Users\Asus\Desktop\5 семестр\СПП\1 лаба\Serialization\Xml\bin\Debug\net6.0\XmlSerializer.dll");
+var assemblyYaml = Assembly.LoadFrom(@"C:\Users\Asus\Desktop\5 семестр\СПП\1 лаба\Serialization\Yaml\bin\Debug\net6.0\YamlSerializer.dll");
 
 
 var typeJson = assemblyJson.GetType("Json.JsonTraceResultSerializer");
 var typeXml = assemblyXml.GetType("Xml.XmlTraceResultSerializer");
+var typeYaml = assemblyYaml.GetType("Yaml.YamlTraceResultSerializer");
 
 var methodJson = typeJson.GetMethod("Serialize");
 var methodXml = typeXml.GetMethod("Serialize");
+var methodYaml = typeYaml.GetMethod("Serialize");
 
 
 
-object obj = Activator.CreateInstance(typeXml);
+object obj = Activator.CreateInstance(typeYaml);
 using (var memoryStream = new MemoryStream(streamSize))
 {
-    methodXml.Invoke(obj, new object[] { result, memoryStream });
+    methodYaml.Invoke(obj, new object[] { result, memoryStream });
     memoryStream.Seek(0, SeekOrigin.Begin);
     var bytes = new byte[streamSize];
     memoryStream.Read(bytes, 0, streamSize);

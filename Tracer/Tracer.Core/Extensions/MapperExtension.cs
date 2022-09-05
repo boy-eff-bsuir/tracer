@@ -14,7 +14,7 @@ namespace Tracer.Core.Extensions
             {
                 ThreadId = tree.Id,
                 TotalTime = tree.Root.Children.Sum(x => x.Data.ExecutionTime),
-                Methods = tree.Root.Children.Select(x => x.Data).ToList()
+                Methods = tree.Root.Children
             };
         }
     }

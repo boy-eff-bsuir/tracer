@@ -14,6 +14,6 @@ namespace Tracer.Core.Models
         [JsonProperty("time")]
         public long TotalTime { get; set; }
         [JsonProperty("methods")]
-        public List<MethodInfo> Methods { get; set; }
+        public List<Node<MethodInfo>> Methods { get; set; }
     }
 }
