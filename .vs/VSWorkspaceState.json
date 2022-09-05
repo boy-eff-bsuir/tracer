@@ -1,13 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Serialization",
-    "\\Serialization\\Json",
-    "\\Serialization\\Xml",
-    "\\Tracer",
-    "\\Tracer\\Tracer.Core",
-    "\\Tracer\\Tracer.Core\\Dtos"
+    ""
   ],
-  "SelectedNode": "\\Serialization\\Xml\\XmlTraceResultSerializer.cs",
+  "SelectedNode": "\\Serialization.sln",
   "PreviewInSolutionExplorer": false
 }

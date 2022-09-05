@@ -24,16 +24,19 @@ namespace Tracer.Core.Services
           }
           public long Stop(Guid id)
           {
-               if (_stopwatches.ContainsKey(id))
-               {
-                    var stopwatch = _stopwatches[id];
-                    stopwatch.Stop();
-                    return stopwatch.ElapsedMilliseconds;
-               }
-               else
+               if (!_stopwatches.ContainsKey(id))
                {
                     return -1;
                }
+
+               var stopwatch = _stopwatches[id];
+               if (!stopwatch.IsRunning)
+               {
+                    return -1;
+               }
+
+               stopwatch.Stop();
+               return stopwatch.ElapsedMilliseconds;
           }
     }
 }

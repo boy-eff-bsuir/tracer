@@ -9,13 +9,12 @@ using Tracer.Core.Dtos;
 
 namespace Tracer.Core.Models
 {
-    [Serializable]
     public class TraceResult
     {
         public TraceResult(List<ThreadInfoResult> threads)
         {
             Threads = threads;
         }
-        public List<ThreadInfoResult> Threads { get; set; }
+        public IReadOnlyList<ThreadInfoResult> Threads { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace Tracer.Core.Extensions
         {
             var node = tree.Root;
             var result = new MethodInfoResult();
-            TraverseToResult(node, result);
+            TraverseMethodInfoToResult(node, result);
 
             return new ThreadInfoResult
             {
@@ -58,7 +58,7 @@ namespace Tracer.Core.Extensions
             {
                 Methods = result.Methods.ToList()
             };
-            TraverseToDto(root, dto);
+            TraverseMethodResultToDto(root, dto);
 
             return new ThreadInfoResultSerializationDto
             {
@@ -68,27 +68,25 @@ namespace Tracer.Core.Extensions
             };
         }
 
-        public static void TraverseToResult(Node<MethodInfo> info, MethodInfoResult result)
+        private static void TraverseMethodInfoToResult(Node<MethodInfo> info, MethodInfoResult result)
         {
             result.Methods = info.Children.Select(
                 x => x.Data.ToMethodInfoResult()).ToList().AsReadOnly();
 
             for (int i = 0; i < info.Children.Count; i++)
             {
-                TraverseToResult(info.Children[i], result.Methods[i]);
+                TraverseMethodInfoToResult(info.Children[i], result.Methods[i]);
             }
         }
 
-        public static void TraverseToDto(MethodInfoResult result, MethodInfoResultSerializationDto dto)
+        private static void TraverseMethodResultToDto(MethodInfoResult result, MethodInfoResultSerializationDto dto)
         {
             dto.Methods = result.Methods.Select(x => x.ToDto()).ToList();
 
             for (int i = 0; i < result.Methods.Count; i++)
             {
-                TraverseToDto(result.Methods[i], dto.Methods[i]);
+                TraverseMethodResultToDto(result.Methods[i], dto.Methods[i]);
             }
         }
-
-        
     }
 }
