@@ -6,17 +6,12 @@ using Newtonsoft.Json;
 
 namespace Tracer.Core.Models
 {
-    public class MethodInfo
+    public class MethodInfoResult
     {
-        public MethodInfo(string name, string className)
-        {
-            Name = name;
-            ClassName = className;
-        }
-
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string ClassName { get; set; }
         public long ExecutionTime { get; set; }
+        public IReadOnlyList<MethodInfoResult> Methods { get; set; }
     }
 }

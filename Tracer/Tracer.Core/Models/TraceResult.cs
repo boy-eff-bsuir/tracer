@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Tracer.Core.Dtos;
 
 namespace Tracer.Core.Models
 {
@@ -15,13 +16,12 @@ namespace Tracer.Core.Models
         {
             
         }
-        public TraceResult(List<ThreadInfo> threads)
+        public TraceResult(List<ThreadInfoResultSerializationDto> threads)
         {
             Threads = threads;
         }
-
         [JsonProperty("threads")]
         [XmlElement("Threads")]
-        public List<ThreadInfo> Threads { get; set; }
+        public List<ThreadInfoResultSerializationDto> Threads { get; set; }
     }
 }
