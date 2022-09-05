@@ -1,19 +1,25 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Tracer.Serialization.Abstractions;
 using Tracer.Core.Models;
-
-
+using Tracer.Serialization.Abstractions;
 
 namespace Json
 {
     public class JsonTraceResultSerializer : ITraceResultSerializer
     {
-        void Serialize(TraceResult traceResult, Stream to)
+        public void Serialize(TraceResult traceResult, Stream to)
         {
+            var json = JsonConvert.SerializeObject(traceResult, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
 
+            to.Write(Encoding.Default.GetBytes(json));
         }
     }
 }

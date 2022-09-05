@@ -6,8 +6,13 @@ using Newtonsoft.Json;
 
 namespace Tracer.Core.Models
 {
+    [Serializable]
     public class MethodInfo
     {
+        public MethodInfo()
+        {
+            
+        }
         public MethodInfo(string name, string className)
         {
             Id = Guid.NewGuid();

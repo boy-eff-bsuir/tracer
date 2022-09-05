@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tracer.Core.Extensions;
+using Tracer.Core.Interfaces;
 using Tracer.Core.Models;
 
 namespace Tracer.Core.Services
 {
-    public class TraceService
+    public class TraceService : ITraceService
     {
         private MethodInfo _rootMethodInfo = new MethodInfo("root", "root");
         private ConcurrentDictionary<int, Tree<MethodInfo>> _methodsByThreadId 
@@ -16,7 +17,7 @@ namespace Tracer.Core.Services
 
         public TraceResult GetResult()
         {
-            var methods = _methodsByThreadId.Values.Select(x => x.ToThreadInfo()).ToList().AsReadOnly();
+            var methods = _methodsByThreadId.Values.Select(x => x.ToThreadInfo()).ToList();
             return new TraceResult(methods);
         }
 

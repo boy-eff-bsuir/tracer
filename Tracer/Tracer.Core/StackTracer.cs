@@ -13,7 +13,13 @@ namespace Tracer.Core
     public class StackTracer : ITracer
     {
         private const int LastStackFrameIndex = 1;
-        private TraceService _traceService = new TraceService();
+        private ITraceService _traceService;
+        private IStopwatchService _stopwatchService;
+        public StackTracer(ITraceService traceService, IStopwatchService stopwatchService)
+        {
+            _traceService = traceService;
+            _stopwatchService = stopwatchService;
+        }
 
         public TraceResult GetTraceResult()
         {
@@ -29,13 +35,21 @@ namespace Tracer.Core
                 method.DeclaringType.Name);
             _traceService.Down(methodInfo);
 
-            StopwatchService.Start(methodInfo.Id);
+            var result = _stopwatchService.Start(methodInfo.Id);
+            if (!result)
+            {
+                throw new Exception(nameof(StackTracer));
+            }
         }
 
         public void StopTrace()
         {
             var method = _traceService.GetCurrentMethod();
-            var time = StopwatchService.Stop(method.Id);
+            var time = _stopwatchService.Stop(method.Id);
+            if (time < 0)
+            {
+                throw new Exception(nameof(StackTracer));
+            }
             _traceService.Up(time);
         }
     }

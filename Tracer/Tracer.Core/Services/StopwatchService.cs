@@ -1,26 +1,39 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Tracer.Core.Interfaces;
 
 namespace Tracer.Core.Services
 {
-    public class StopwatchService
+    public class StopwatchService : IStopwatchService
     {
-       private static Dictionary<Guid, Stopwatch> _stopwatches = new Dictionary<Guid, Stopwatch>();
+          private ConcurrentDictionary<Guid, Stopwatch> _stopwatches 
+               = new ConcurrentDictionary<Guid, Stopwatch>();
 
-       public static void Start(Guid id)
-       {
-            _stopwatches.Add(id, new Stopwatch());
-            _stopwatches[id].Start();
-       }
-
-       public static long Stop(Guid id)
-       {
-            var stopwatch = _stopwatches[id];
-            stopwatch.Stop();
-            return stopwatch.ElapsedMilliseconds;
-       }
+          public bool Start(Guid id)
+          {
+               bool result = _stopwatches.TryAdd(id, new Stopwatch());
+               if (result)
+               {
+                    _stopwatches[id].Start();
+               }
+               return result;
+          }
+          public long Stop(Guid id)
+          {
+               if (_stopwatches.ContainsKey(id))
+               {
+                    var stopwatch = _stopwatches[id];
+                    stopwatch.Stop();
+                    return stopwatch.ElapsedMilliseconds;
+               }
+               else
+               {
+                    return -1;
+               }
+          }
     }
 }

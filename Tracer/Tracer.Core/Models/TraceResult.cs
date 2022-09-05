@@ -3,17 +3,25 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Newtonsoft.Json;
 
 namespace Tracer.Core.Models
 {
+    [Serializable]
     public class TraceResult
     {
-        public TraceResult(IReadOnlyList<ThreadInfo> threads)
+        public TraceResult()
+        {
+            
+        }
+        public TraceResult(List<ThreadInfo> threads)
         {
             Threads = threads;
         }
+
         [JsonProperty("threads")]
-        IReadOnlyList<ThreadInfo> Threads { get; set; }
+        [XmlElement("Threads")]
+        public List<ThreadInfo> Threads { get; set; }
     }
 }
