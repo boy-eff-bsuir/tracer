@@ -17,7 +17,7 @@ namespace Tracer.Core.Services
 
         public TraceResult GetResult()
         {
-            var methods = _methodsByThreadId.Values.Select(x => x.ToThreadInfoResult().ToDto()).ToList();
+            var methods = _methodsByThreadId.Values.Select(x => x.ToThreadInfoResult()).ToList();
             return new TraceResult(methods);
         }
 

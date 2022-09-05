@@ -12,16 +12,10 @@ namespace Tracer.Core.Models
     [Serializable]
     public class TraceResult
     {
-        public TraceResult()
-        {
-            
-        }
-        public TraceResult(List<ThreadInfoResultSerializationDto> threads)
+        public TraceResult(List<ThreadInfoResult> threads)
         {
             Threads = threads;
         }
-        [JsonProperty("threads")]
-        [XmlElement("Threads")]
-        public List<ThreadInfoResultSerializationDto> Threads { get; set; }
+        public List<ThreadInfoResult> Threads { get; set; }
     }
 }

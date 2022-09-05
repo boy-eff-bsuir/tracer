@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 using Tracer.Core.Models;
+using Tracer.Core.Extensions;
 
 int streamSize = 2000;
 IStopwatchService stopwatchService = new StopwatchService();
@@ -33,10 +34,10 @@ var methodYaml = typeYaml.GetMethod("Serialize");
 
 
 
-object obj = Activator.CreateInstance(typeJson);
+object obj = Activator.CreateInstance(typeYaml);
 using (var memoryStream = new MemoryStream(streamSize))
 {
-    methodJson.Invoke(obj, new object[] { result, memoryStream });
+    methodYaml.Invoke(obj, new object[] { result.ToDto(), memoryStream });
     memoryStream.Seek(0, SeekOrigin.Begin);
     var bytes = new byte[streamSize];
     memoryStream.Read(bytes, 0, streamSize);

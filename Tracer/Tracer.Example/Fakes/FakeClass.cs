@@ -33,6 +33,14 @@ namespace Tracer.Example.Fakes
         {
             _tracer.StartTrace();
             Thread.Sleep(200);
+            M3();
+            _tracer.StopTrace();
+        }
+
+        private void M3()
+        {
+            _tracer.StartTrace();
+            Thread.Sleep(200);
             _tracer.StopTrace();
         }
     }

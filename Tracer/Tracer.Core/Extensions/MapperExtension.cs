@@ -31,6 +31,11 @@ namespace Tracer.Core.Extensions
             };
         }
 
+        public static TraceResultSerializationDto ToDto(this TraceResult result)
+        {
+            return new TraceResultSerializationDto(result.Threads.Select(x => x.ToDto()).ToList());
+        }
+
 
         public static ThreadInfoResult ToThreadInfoResult(this Tree<MethodInfo> tree)
         {
