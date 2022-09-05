@@ -8,8 +8,15 @@ namespace Tracer.Core.Models
 {
     public class ThreadInfoResult
     {
-        public int ThreadId { get; set; }
-        public long TotalTime { get; set; }
-        public IReadOnlyList<MethodInfoResult> Methods { get; set; }
+        public ThreadInfoResult(int threadId, long totalTime, IReadOnlyList<MethodInfoResult> methods)
+        {
+            ThreadId = threadId;
+            TotalTime = totalTime;
+            Methods = methods;
+        }
+
+        public int ThreadId { get; }
+        public long TotalTime { get; }
+        public IReadOnlyList<MethodInfoResult> Methods { get; }
     }
 }

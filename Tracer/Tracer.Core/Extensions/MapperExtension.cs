@@ -11,13 +11,12 @@ namespace Tracer.Core.Extensions
     {
         public static MethodInfoResult ToMethodInfoResult(this MethodInfo method)
         {
-            return new MethodInfoResult()
-            {
-                Id = method.Id,
-                Name = method.Name,
-                ClassName = method.ClassName,
-                ExecutionTime = method.ExecutionTime
-            };
+            return new MethodInfoResult(
+                method.Id,
+                method.Name,
+                method.ClassName,
+                method.ExecutionTime
+            );
         }
 
         public static MethodInfoResultSerializationDto ToDto(this MethodInfoResult result)
@@ -43,12 +42,11 @@ namespace Tracer.Core.Extensions
             var result = new MethodInfoResult();
             TraverseMethodInfoToResult(node, result);
 
-            return new ThreadInfoResult
-            {
-                ThreadId = tree.Id,
-                TotalTime = tree.Root.Children.Sum(x => x.Data.ExecutionTime),
-                Methods = result.Methods
-            };
+            return new ThreadInfoResult(
+                tree.Id,
+                tree.Root.Children.Sum(x => x.Data.ExecutionTime),
+                result.Methods
+            );
         }
         
         public static ThreadInfoResultSerializationDto ToDto(this ThreadInfoResult result)

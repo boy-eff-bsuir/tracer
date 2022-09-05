@@ -8,10 +8,34 @@ namespace Tracer.Core.Models
 {
     public class MethodInfoResult
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string ClassName { get; set; }
-        public long ExecutionTime { get; set; }
-        public IReadOnlyList<MethodInfoResult> Methods { get; set; }
+        public MethodInfoResult()
+        {
+        }
+
+        public MethodInfoResult(Guid id, string name, string className, long executionTime)
+        {
+            Id = id;
+            Name = name;
+            ClassName = className;
+            ExecutionTime = executionTime;
+        }
+
+        public Guid Id { get; }
+        public string Name { get; }
+        public string ClassName { get; }
+        public long ExecutionTime { get; }
+        private IReadOnlyList<MethodInfoResult> _methods;
+        public IReadOnlyList<MethodInfoResult> Methods { 
+            get
+            {
+                return _methods;
+            } 
+            set 
+            {
+                if (_methods == null)
+                {
+                    _methods = value;
+                }
+        } }
     }
 }

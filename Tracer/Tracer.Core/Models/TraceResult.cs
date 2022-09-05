@@ -15,6 +15,6 @@ namespace Tracer.Core.Models
         {
             Threads = threads;
         }
-        public IReadOnlyList<ThreadInfoResult> Threads { get; set; }
+        public IReadOnlyList<ThreadInfoResult> Threads { get; }
     }
 }
