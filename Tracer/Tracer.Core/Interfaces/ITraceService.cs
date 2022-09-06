@@ -9,7 +9,7 @@ namespace Tracer.Core.Interfaces
     public interface ITraceService
     {
         TraceResult GetResult();
-        void Up(long time);
+        bool Up(long time);
         void Down(MethodInfo info);
         MethodInfo GetCurrentMethod();
     }

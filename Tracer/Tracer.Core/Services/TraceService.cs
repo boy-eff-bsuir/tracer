@@ -12,6 +12,7 @@ namespace Tracer.Core.Services
     public class TraceService : ITraceService
     {
         private MethodInfo _rootMethodInfo = new MethodInfo("root", "root");
+        object locker = new object();
         private ConcurrentDictionary<int, Tree<MethodInfo>> _methodsByThreadId 
             = new ConcurrentDictionary<int, Tree<MethodInfo>>();
 
@@ -21,11 +22,20 @@ namespace Tracer.Core.Services
             return new TraceResult(methods);
         }
 
-        public void Up(long time)
+        public bool Up(long time)
         {
             var tree = GetCurrentThreadTree();
+            if (time < 0)
+            {
+                return false;
+            }
             tree.CurrentNode.Data.ExecutionTime = time;
+            if (tree.CurrentNode.Parent == null)
+            {
+                return false;
+            }
             tree.CurrentNode = tree.CurrentNode.Parent;
+            return true;
         }
 
         public void Down(MethodInfo info)
@@ -34,7 +44,10 @@ namespace Tracer.Core.Services
             Node<MethodInfo> newNode = new Node<MethodInfo>(info);
             newNode.Parent = tree.CurrentNode;
             newNode.Data = info;
-            tree.CurrentNode.Children.Add(newNode);
+            lock(locker)
+            {
+                tree.CurrentNode.Children.Add(newNode);
+            }
             tree.CurrentNode = newNode;
         }
 
