@@ -8,6 +8,8 @@ namespace Xml
 {
     public class XmlTraceResultSerializer : ITraceResultSerializer
     {
+        public string SerializationType { get; } = "Xml";
+
         public void Serialize(TraceResult traceResult, Stream to)
         {
             var dto = traceResult.ToDto();

@@ -9,6 +9,8 @@ namespace Yaml
 {
     public class YamlTraceResultSerializer : ITraceResultSerializer
     {
+        public string SerializationType { get; } = "Yaml";
+
         public void Serialize(TraceResult traceResult, Stream to)
         {
             var dto = traceResult.ToDto();

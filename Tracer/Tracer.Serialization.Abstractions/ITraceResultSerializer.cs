@@ -8,6 +8,7 @@ namespace Tracer.Serialization.Abstractions
 {
     public interface ITraceResultSerializer
     {
+        string SerializationType { get; }
         void Serialize(TraceResult traceResult, Stream to);
     }
 }

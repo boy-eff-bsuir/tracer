@@ -13,6 +13,8 @@ namespace Json
 {
     public class JsonTraceResultSerializer : ITraceResultSerializer
     {
+        public string SerializationType { get; } = "Json";
+
         public void Serialize(TraceResult traceResult, Stream to)
         {
             var dto = traceResult.ToDto();
