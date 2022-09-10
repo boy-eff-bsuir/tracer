@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tracer.Core.Dtos;
 using Tracer.Core.Models;
 using Tracer.Serialization.Abstractions;
 
@@ -13,7 +12,7 @@ namespace Json
 {
     public class JsonTraceResultSerializer : ITraceResultSerializer
     {
-        public string SerializationType { get; } = "Json";
+        public string SerializationFormat { get; } = "json";
 
         public void Serialize(TraceResult traceResult, Stream to)
         {

@@ -9,7 +9,7 @@ namespace Yaml
 {
     public class YamlTraceResultSerializer : ITraceResultSerializer
     {
-        public string SerializationType { get; } = "Yaml";
+        public string SerializationFormat { get; } = "yaml";
 
         public void Serialize(TraceResult traceResult, Stream to)
         {

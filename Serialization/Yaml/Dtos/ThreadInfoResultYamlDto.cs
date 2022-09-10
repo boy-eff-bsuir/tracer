@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 namespace Serialization.YamlSerializer.Dtos
 {
     [Serializable]
-    public class ThreadInfoResultXmlDto
+    public class ThreadInfoResultYamlDto
     {
         public int ThreadId { get; set; }
         public long TotalTime { get; set; }
-        public List<MethodInfoResultXmlDto> Methods { get; set; }
+        public List<MethodInfoResultYamlDto> Methods { get; set; }
     }
 }
