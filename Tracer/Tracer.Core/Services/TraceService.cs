@@ -12,7 +12,7 @@ namespace Tracer.Core.Services
     public class TraceService : ITraceService
     {
         private MethodInfo _rootMethodInfo = new MethodInfo("root", "root");
-        object locker = new object();
+        private object locker = new object();
         private ConcurrentDictionary<int, Tree<MethodInfo>> _methodsByThreadId 
             = new ConcurrentDictionary<int, Tree<MethodInfo>>();
 

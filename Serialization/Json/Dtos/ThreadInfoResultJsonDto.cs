@@ -4,18 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using Tracer.Core.Models;
 
-namespace Tracer.Core.Dtos
+namespace Serialization.JsonSerializer.Dtos
 {
     [Serializable]
-    public class ThreadInfoResultSerializationDto
+    public class ThreadInfoResultJsonDto
     {
         [JsonProperty("id")]
         public int ThreadId { get; set; }
         [JsonProperty("time")]
         public long TotalTime { get; set; }
         [JsonProperty("methods")]
-        public List<MethodInfoResultSerializationDto> Methods { get; set; }
+        public List<MethodInfoResultJsonDto> Methods { get; set; }
     }
 }

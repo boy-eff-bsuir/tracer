@@ -37,7 +37,7 @@ var methodYaml = typeYaml.GetMethod("Serialize");
 object obj = Activator.CreateInstance(typeYaml);
 using (var memoryStream = new MemoryStream(streamSize))
 {
-    methodYaml.Invoke(obj, new object[] { result.ToDto(), memoryStream });
+    methodYaml.Invoke(obj, new object[] { result, memoryStream });
     memoryStream.Seek(0, SeekOrigin.Begin);
     var bytes = new byte[streamSize];
     memoryStream.Read(bytes, 0, streamSize);
