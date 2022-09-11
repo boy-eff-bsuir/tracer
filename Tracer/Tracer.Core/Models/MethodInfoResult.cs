@@ -36,6 +36,10 @@ namespace Tracer.Core.Models
                 {
                     _methods = value;
                 }
+                else
+                {
+                    throw new Exception("Method value is already set");
+                }
         } }
     }
 }
